@@ -26,7 +26,8 @@
 
 </head>
 
-<body> <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+<body> 
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="check2" viewBox="0 0 16 16">
             <path
                 d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z">
@@ -81,7 +82,8 @@
                         <use href="#check2"></use>
                     </svg> </button> </li>
         </ul>
-    </div> <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    </div> 
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="calendar3" viewBox="0 0 16 16">
             <path
                 d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z">
@@ -181,20 +183,10 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
-                
-                <div class="col-md-3">
+            <main role="main">
 
-                </div>
-
-                <div class="col-md-6">
                     {% block content %}
                     {% endblock %}
-
-                </div>
-                <div class="col-md-3">
-
-                </div>
 
             </main>
         </div>

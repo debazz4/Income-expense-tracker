@@ -8,6 +8,7 @@ django = "*"
 psycopg = "*"
 django-heroku = "*"
 gunicorn = "*"
+validate-email = "*"
 
 [dev-packages]
 
