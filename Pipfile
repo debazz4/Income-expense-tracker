@@ -9,6 +9,9 @@ psycopg = "*"
 django-heroku = "*"
 gunicorn = "*"
 validate-email = "*"
+black = "*"
+python-decouple = "*"
+six = "*"
 
 [dev-packages]
 
