@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 import os
-from django.contrib import messages
+from django.contrib.messages import constants as messages
 from decouple import config
 # import django_heroku
 
@@ -137,8 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
  
 # django_heroku.settings(locals())
 
-MESSAGES_TAGS = {
-    messages.ERROR: 'danger'
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
 }
 
 # email stuff

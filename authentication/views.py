@@ -10,9 +10,10 @@ from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 from django.http import HttpResponse
 from django.urls import reverse
-from django.utils.encoding import force_bytes, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib import auth
 from .utils import token_generator
 EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 
@@ -96,5 +97,50 @@ class RegistrationView(View):
  
 class VerificationView(View):
     def get(self, request, uidb64, token):
+
+        try:
+            id = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=id)
+
+            if not token_generator.check_token(user, token):
+                return redirect('login'+'?messages='+'User already activated')
+            
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated successfully')
+            return redirect('login')
+        except Exception as e:
+            pass
+
+
         return redirect('login')
+    
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'authentication/login.html')
+    
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if username and password:
+            user = auth.authenticate(request, username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth.login(request, user)
+                    messages.success(request, 'Welcome ' + user.username + ', you are now logged in.')
+                    return redirect('index')
+                messages.error(request, 'Account is not active, please check your email to activate your account.')
+                return render(request, 'authentication/login.html')
+            messages.error(request, 'Invalid credentials, try again.')
+            return render(request, 'authentication/login.html')
+        messages.error(request, 'Please fill in all fields')
+        return render(request, 'authentication/login.html')
+
+                    
+
+        
 
