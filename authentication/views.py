@@ -120,12 +120,14 @@ class VerificationView(View):
     
 class LoginView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('index')
         return render(request, 'authentication/login.html')
     
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-
+        
         if username and password:
             user = auth.authenticate(request, username=username, password=password)
             if user:
@@ -139,6 +141,12 @@ class LoginView(View):
             return render(request, 'authentication/login.html')
         messages.error(request, 'Please fill in all fields')
         return render(request, 'authentication/login.html')
+
+class LogoutView(View):
+    def post(self, request):
+        auth.logout(request)
+        messages.success(request, 'You have been logged out')
+        return redirect('login')
 
                     
 
