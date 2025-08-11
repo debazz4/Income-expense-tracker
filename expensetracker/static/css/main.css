@@ -87,3 +87,17 @@
 .showPasswordToggle:hover {
     transform: scale(1.2)
 }
+
+.signOutButton {
+    background-color: transparent;
+        border: none;
+        color: #007bff;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+}

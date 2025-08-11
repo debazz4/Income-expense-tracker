@@ -58,16 +58,24 @@
                             <use xlink:href="#gear-wide-connected"></use>
                         </svg>
                         Settings
-                    </a> </li>
+                    </a> 
+                </li>
+                <li class="nav-item"> <a class="nav-link d-flex align-items-center gap-2" href="{% url 'preferences' %}"> <svg class="bi" aria-hidden="true">
+                            <use xlink:href="#gear-wide-connected"></use>
+                        </svg>
+                        General
+                    </a>
+                </li>
                 <li class="nav-item"> <a class="nav-link d-flex align-items-center gap-2" href="#"> <svg class="bi"
                             aria-hidden="true">
                             <use xlink:href="#door-closed"></use>
                         </svg>
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
-                            <input class='text text-capitalize text-blue' type="submit" value="Sign Out">
+                            <input class='text text-capitalize text-blue signOutButton' type="submit" value="Sign Out">
                         </form>
-                    </a> </li>
+                    </a> 
+                </li>
             </ul>
         </div>
     </div>
