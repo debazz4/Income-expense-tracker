@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="row mt-4">
+    <div class="row mt-4 text-center">
         <div class="col-md-10">
             <nav style="--bs-breadcrumb-divider: '>'; background-color: #f8f9fa;" aria-label="breadcrumb" class="p-1">
                 <ol class="breadcrumb">
@@ -13,7 +13,9 @@
         </div>
 
         <div class="col-md-2">
-            <a href="{% url 'add-expenses' %}" class="btn btn-primary">Add Expense</a>
+            <a href="{% url 'add-expenses' %}" class="btn btn-primary"><svg class="bi" aria-hidden="true">
+                <use xlink:href="#plus-circle"></use>
+            </svg> Add Expense</a>
         </div>
     </div>
 
