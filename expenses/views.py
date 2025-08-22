@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Expenses, Category
+from userpreferences.models import UserPreferences
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
@@ -22,12 +23,16 @@ def search_expenses(request):
 @login_required(login_url='/auth/login')
 def index(request):
     expenses = Expenses.objects.filter(owner=request.user)
+    currency = UserPreferences.objects.get(user=request.user).currency
+    if not currency:
+        currency = 'NGN'
     paginator = Paginator(expenses, 10)
     page_number = request.GET.get('page')
     page_obj =  Paginator.get_page(paginator, page_number)
     context = {
         'expenses': expenses,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'currency': currency,
     }
     return render(request, 'expenses/index.html', context)
 
