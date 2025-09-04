@@ -25,3 +25,11 @@ a.button {
     cursor: pointer;
     transition: background 0.15s;
 }
+
+.module h2,
+.module caption,
+.inline-group h2 {
+
+    background: rgb(0, 62, 69);
+}
+
