@@ -3,6 +3,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .models import ActivationEmail
+from userpreferences.models import UserPreferences
 import json
 from validate_email import validate_email
 from django.contrib import messages
@@ -84,11 +85,15 @@ class RegistrationView(View):
                 recipient_list = [user.email],
                 fail_silently=False,
             )
-
+            
             email = ActivationEmail()
             email.email = user.email
             email.save()
-            
+
+            userperference = UserPreferences()
+            userperference.user = user
+            userperference.currency = "USD"
+            userperference.save()
 
             messages.success(request, 'Account has been successfully created.')
             return render(request, 'authentication/register.html')

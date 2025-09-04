@@ -5,8 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('', views.index, name='income'),
-   # path('search-expenses', csrf_exempt(views.search_expenses), name='search-expenses'),
+    path('search-income', csrf_exempt(views.search_income), name='search-income'),
     path('add-income', views.add_income, name='add-income'),
-   # path('expense-edit/<int:id>', views.expense_edit, name='expense-edit'),
-   #path('expense-delete/<int:id>', views.expense_delete, name='expense-delete')
+    path('income-edit/<int:id>', views.income_edit, name='income-edit'),
+    path('income-delete/<int:id>', views.income_delete, name='income-delete')
 ]
