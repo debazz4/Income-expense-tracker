@@ -4,10 +4,10 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
         <div class="d-flex justify-content-center align-items-center vh-100 w-100">
-            <div class="card p-4" style="width: 22rem;">
+            <div class="card p-4" style="width: 30rem;">
               <div class="card-body">
                 <div class="card-title py-3 text-center">
                   <h4>Register for a free account</h4>
@@ -41,12 +41,18 @@
           
                   <input type="submit" value="Register" class="btn btn-primary w-100 mt-2 submit-btn">
                 </form>
+
+                <div class="container">
+                  <span class="text-lead lead">Already signed up?</span><a href="{% url 'login' %}">Login</a><br>
+                  <span class="text-lead lead">Forgot Password?</span><a href="{% url 'reset-password' %}">Reset it</a>
+                </div>
               </div>
+              
             </div>
           </div>
 
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
 </div>
 
 <script src="{% static 'js/register.js' %}"></script>
