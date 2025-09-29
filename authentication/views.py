@@ -244,7 +244,7 @@ class CompletePasswordReset(View):
             id = force_str(urlsafe_base64_decode(uidb64))
 
             user = User.objects.get(pk=id)
-            user.set_password=password
+            user.set_password(password)
             user.save()
 
             messages.success(request, 'Password reset successfully!')
