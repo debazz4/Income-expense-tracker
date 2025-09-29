@@ -1,10 +1,11 @@
+import json
+import threading
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .models import ActivationEmail
 from userpreferences.models import UserPreferences
-import json
 from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import  send_mail
@@ -17,8 +18,16 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import auth
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from .utils import token_generator
+from .tasks import send_activation_email, send_password_reset_email
 EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 
+class EmailThread(threading.Thread):
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send(fail_silently=False)
 
 class UsernameValidationView(View):
     def post(self, request):
@@ -79,14 +88,10 @@ class RegistrationView(View):
             # Send activation email
             email_subject = 'Activate your account'
             email_body = 'Hi ' + user.username + ' Please use this link to verify your account\n' + activate_url
-            send_mail(
-                subject = email_subject,
-                message = email_body,
-                from_email = EMAIL_HOST_USER,
-                recipient_list = [user.email],
-                fail_silently=False,
-            )
-            
+            from_email = EMAIL_HOST_USER
+           
+           # using celery + redis for activation email
+            send_activation_email.delay(email_subject, email_body, from_email, [user.email])
             email = ActivationEmail()
             email.email = user.email
             email.save()
@@ -127,7 +132,7 @@ class VerificationView(View):
 class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('index')
+            return redirect('expenses')
         return render(request, 'authentication/login.html')
     
     def post(self, request):
@@ -184,13 +189,16 @@ class RequestPasswordReset(View):
             # Send reset email
             email_subject = 'Reset your password!'
             email_body = 'Hi ' + user[0].username + ', Please use this link to reset your password\n' +  activate_url
-            send_mail(
-                    subject = email_subject,
-                    message = email_body,
-                    from_email = EMAIL_HOST_USER,
-                    recipient_list = [user[0].email],
-                    fail_silently=False,
-                )
+            # send_mail(
+            #         subject = email_subject,
+            #         message = email_body,
+            #         from_email = EMAIL_HOST_USER,
+            #         recipient_list = [user[0].email],
+            #         fail_silently=False,
+            #     )
+            from_email = EMAIL_HOST_USER
+            # using celery + redis for reset password email
+            send_password_reset_email.delay(email_subject, email_body, from_email, [user[0].email])
             messages.success(request, 'We have sent you an email to reset your password.')
 
             return render(request, 'authentication/reset-password.html')
