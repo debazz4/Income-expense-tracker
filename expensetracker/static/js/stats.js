@@ -1,8 +1,10 @@
 const renderChart = (labels, data) => {
     const ctx = document.getElementById('myChart');
 
+    Chart.getChart("myChart")?.destroy();
+
     new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
             labels: labels,
             datasets: [{
@@ -23,15 +25,17 @@ const renderChart = (labels, data) => {
 };
 
 const getStats = () => {
-    console.log("Getting stats...");
     fetch('/expense-category-summary')
         .then(res => res.json())
         .then(results => {
-            console.log("Results", results);
-
-            renderChart([], []);
+            const category_data = results.expense_category_data;
+            const [labels, data] = [
+                Object.keys(category_data),
+                Object.values(category_data)
+            ];
+            renderChart(labels, data);
         }
         );
 };
 
-document.onload = getStats();
+document.addEventListener('DOMContentLoaded', getStats);
