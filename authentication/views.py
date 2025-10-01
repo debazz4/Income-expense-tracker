@@ -91,7 +91,7 @@ class RegistrationView(View):
             from_email = EMAIL_HOST_USER
            
            # using celery + redis for activation email
-            send_activation_email.delay(email_subject, email_body, from_email, [user.email])
+            send_activation_email.delay(email_subject, email_body, from_email, [user.email]) # type: ignore
             email = ActivationEmail()
             email.email = user.email
             email.save()
@@ -197,8 +197,9 @@ class RequestPasswordReset(View):
             #         fail_silently=False,
             #     )
             from_email = EMAIL_HOST_USER
+
             # using celery + redis for reset password email
-            send_password_reset_email.delay(email_subject, email_body, from_email, [user[0].email])
+            send_password_reset_email.delay(email_subject, email_body, from_email, [user[0].email]) # type: ignore
             messages.success(request, 'We have sent you an email to reset your password.')
 
             return render(request, 'authentication/reset-password.html')

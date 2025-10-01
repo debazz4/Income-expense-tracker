@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4 text-center">
+        <div class="col-md-10">
+            <nav style="--bs-breadcrumb-divider: '>'; background-color: #f8f9fa;" aria-label="breadcrumb" class="p-1">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="#">Expenses Summary</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Expenses Summay</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'add-expenses' %}" class="btn btn-primary"><svg class="bi" aria-hidden="true">
+                    <use xlink:href="#plus-circle"></use>
+                </svg>Back</a>
+        </div>
+    </div>
+
+    <div style="width: 800px; height: 800px; margin: auto;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/stats.js' %}"></script>
+{% endblock %}
