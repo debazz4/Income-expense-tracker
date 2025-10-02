@@ -29,6 +29,12 @@ const getStats = () => {
         .then(res => res.json())
         .then(results => {
             const category_data = results.expense_category_data;
+
+            if (!category_data || Object.keys(category_data).length === 0) {
+                console.warn("No data found for chart");
+                return; //  don’t render a dummy chart
+            }
+
             const [labels, data] = [
                 Object.keys(category_data),
                 Object.values(category_data)

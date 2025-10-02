@@ -10,5 +10,8 @@ urlpatterns = [
     path('expense-edit/<int:id>', views.expense_edit, name='expense-edit'),
     path('expense-delete/<int:id>', views.expense_delete, name='expense-delete'),
     path('expense-category-summary', views.expense_category_summary, name='expense-category-summary'),
-    path('stats', views.stats_view, name='stats')
+    path('stats', views.stats_view, name='stats'),
+    path('export-csv', views.export_csv, name='export-csv'),
+    path('export-excel', views.export_excel, name='export-excel'),
+
 ]
