@@ -12,6 +12,7 @@ validate-email = "*"
 black = "*"
 python-decouple = "*"
 six = "*"
+weasyprint = "*"
 
 [dev-packages]
 
